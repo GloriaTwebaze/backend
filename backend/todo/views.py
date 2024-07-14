@@ -28,4 +28,18 @@ class ViewTodos(generics.ListAPIView):
 
 
 class EditTodo(generics.UpdateAPIView):
-    pass
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
+
+
+class DeleteTodo(generics.DestroyAPIView):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
+
+    def delete(self, request, *args, **kwargs):
+        try:
+            todo = self.get_object()
+            self.perform_destroy(todo)
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
