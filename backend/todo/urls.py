@@ -1,7 +1,8 @@
 from django.urls import path
 
-from . import views
+from .views import CreateTodo, ViewTodos
 
 urlpatterns = [
-    path("", views.index, name="index"),
+    path("create-todo/", CreateTodo.as_view(), name="create"),
+    path('view-todos/', ViewTodos.as_view(), name='view-todos')
 ]
